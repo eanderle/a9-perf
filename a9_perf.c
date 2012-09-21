@@ -12,6 +12,7 @@ static inline void select_idx(int idx) {
 static inline void enable_event_for_idx(int event, int idx) {
     select_idx(idx);
     asm volatile("mcr p15, 0, %0, c9, c13, 1" : : "r" (event));
+    asm volatile("mcr p15, 0, %0, c9, c12, 1" : : "r" (0x1));
 }
 
 static inline long long get_count_for_idx(int idx) {
@@ -24,6 +25,7 @@ static inline long long get_count_for_idx(int idx) {
 static int __init a9_perf_start(void)
 {
     printk("Cortex A9 Performance Counters version %s loaded\n", DRIVER_VER);
+    asm volatile("mcr p15, 0, %0, c9, c12, 0" : : "r" (0x1)); // Enable all counters
     enable_event_for_idx(0x68, 0);
     return 0;
 }
