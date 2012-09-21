@@ -1,12 +1,5 @@
-#include <asm/cacheflush.h>
-#include <asm/io.h>
-#include <asm/memory.h>
-#include <asm/uaccess.h>
-#include <linux/fs.h>
-#include <linux/init.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
-#include <linux/moduleparam.h>
 
 #define DRIVER_AUTHOR "Eric Anderle"
 #define DRIVER_DESC   "ARM Cortex A9 Performance Counters"
@@ -37,7 +30,7 @@ static int __init a9_perf_start(void)
 
 static void __exit a9_perf_end(void)
 {
-    printk("Instructions out of core renaming stage: ", get_count_for_idx(0));
+    printk("Instructions out of core renaming stage: %lld\n", get_count_for_idx(0));
     printk("Cortex A9 Performance Counters version %s unloaded\n", DRIVER_VER);
 }
 
