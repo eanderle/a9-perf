@@ -21,16 +21,19 @@ static inline void set_event_for_idx(int event, int idx) {
     asm volatile("mcr p15, 0, %0, c9, c13, 1" : : "r" (event));
 }
 
-static inline void disable_all_counters() {
-    asm volatile("mcr p15, 0, %0, c9, c12, 1" : : "r" (0x0));
+static inline void disable_all_counters(void) {
+    asm volatile("mcr p15, 0, %0, c9, c12, 2" : : "r" (0xf));
 }
 
-static inline void enable_all_counters() {
+static inline void enable_all_counters(void) {
     asm volatile("mcr p15, 0, %0, c9, c12, 1" : : "r" (0xf));
 }
 
+static inline void disable_counter_for_idx(int event, int idx) {
+    asm volatile("mcr p15, 0, %0, c9, c12, 2" : : "r" (1 << idx));
+}
+
 static inline void enable_counter_for_idx(int event, int idx) {
-    // Count enable
     asm volatile("mcr p15, 0, %0, c9, c12, 1" : : "r" (1 << idx));
 }
 
