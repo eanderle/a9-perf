@@ -22,11 +22,11 @@ static inline void set_event_for_idx(int event, int idx) {
 }
 
 static inline void disable_all_counters(void) {
-    asm volatile("mcr p15, 0, %0, c9, c12, 2" : : "r" (0xf));
+    asm volatile("mcr p15, 0, %0, c9, c12, 2" : : "r" (0x8000003f));
 }
 
 static inline void enable_all_counters(void) {
-    asm volatile("mcr p15, 0, %0, c9, c12, 1" : : "r" (0xf));
+    asm volatile("mcr p15, 0, %0, c9, c12, 1" : : "r" (0x8000003f));
 }
 
 static inline void disable_counter_for_idx(int event, int idx) {
